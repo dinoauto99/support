@@ -1,0 +1,6 @@
+Target,Line Info,Incident Type,Description
+test_code.c - unused_param_test,"3: void unused_param_test(int a, char *b) {",Unused Parameter,Parameter 'b' is declared but not used.
+test_code.c - empty_func_test,7: void empty_func_test() {,Empty Function,Function has no logic or statements.
+test_code.c - empty_if_test,14: if (status == 1) {,Empty If,Found empty if block.
+test_code.c - empty_if_test,18: if (status == 2) ;,Empty If,Found empty if statement ending with semicolon.
+test_code.c - empty_switch_test,22: switch (val) {,Empty Switch,Found empty switch block.

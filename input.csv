@@ -1,0 +1,6 @@
+File Name,Function Name
+test_code.c,unused_param_test
+test_code.c,empty_func_test
+test_code.c,empty_if_test
+test_code.c,empty_switch_test
+test_code.c,normal_func
