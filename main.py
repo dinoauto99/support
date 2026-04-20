@@ -1,5 +1,6 @@
 import argparse
 import os
+import concurrent.futures
 from io_handlers import CSVInputProvider, CSVReportGenerator
 from core import CFileAnalyzer
 from detectors import get_all_detectors
@@ -9,6 +10,7 @@ def main():
     parser.add_argument("--source-dir", required=True, help="Path to C source code directory")
     parser.add_argument("--input-csv", required=True, help="Path to input CSV containing filenames and function names")
     parser.add_argument("--output-csv", required=True, help="Path to output CSV report")
+    parser.add_argument("--workers", type=int, default=os.cpu_count() or 4, help="Number of concurrent worker threads")
     
     args = parser.parse_args()
 
@@ -32,14 +34,27 @@ def main():
             if file in file_func_map:
                 file_paths[file] = os.path.join(root, file)
 
-    # 6. Analyze and gather incidents
+    # 6. Analyze and gather incidents concurrently
     all_incidents = []
-    for file_name, funcs in file_func_map.items():
+    
+    def process_file(file_name, funcs):
         if file_name in file_paths:
-            incidents = analyzer.analyze_file(file_paths[file_name], file_name, funcs)
-            all_incidents.extend(incidents)
+            return analyzer.analyze_file(file_paths[file_name], file_name, funcs)
         else:
             print(f"Warning: File {file_name} not found in {args.source_dir}")
+            return []
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
+        future_to_file = {
+            executor.submit(process_file, file_name, funcs): file_name
+            for file_name, funcs in file_func_map.items()
+        }
+        for future in concurrent.futures.as_completed(future_to_file):
+            try:
+                incidents = future.result()
+                all_incidents.extend(incidents)
+            except Exception as e:
+                print(f"Error processing {future_to_file[future]}: {e}")
 
     # 7. Generate report
     reporter.generate(all_incidents, file_func_map)
