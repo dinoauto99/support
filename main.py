@@ -42,7 +42,7 @@ def main():
             print(f"Warning: File {file_name} not found in {args.source_dir}")
 
     # 7. Generate report
-    reporter.generate(all_incidents)
+    reporter.generate(all_incidents, file_func_map)
 
 if __name__ == "__main__":
     main()

@@ -24,6 +24,15 @@ void empty_switch_test(int val) {
     }
 }
 
+void all_testing(int a, int bn int *c){
+    if (a == 1) {
+        
+    }
+    if (b==0){}
+    switch (b){
+    }
+}
+
 // Function pointer parameter test and nested macro stuff shouldn't break this too badly, 
 // but we just test standard cases here.
 void normal_func(int x) {
