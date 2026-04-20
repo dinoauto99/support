@@ -1,18 +1,10 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 from typing import List
 from models import FunctionContext, Incident
 
-class SingletonABCMeta(ABCMeta):
-    """Metaclass combining ABCMeta and Singleton to manage a single unique instance."""
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-class BaseDetector(metaclass=SingletonABCMeta):
+class BaseDetector(ABC):
     """
-    The core abstract class representing a strategy (Singleton applied). 
+    The core abstract class representing a strategy. 
 
     Any incident rule checker must inherit from this class.
     """
