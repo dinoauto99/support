@@ -1,0 +1,13 @@
+Target (File - Function),Incident Count,Incident Types,Detailed Description
+new_tests.c - test_unused_local,1,Unused Local Variable,"line number 13: void test_unused_local() {
+=> Unused Local Variable, Local variable 'unused_var' is declared but not used."
+new_tests.c - test_identical_branches,3,"Identical Branches, Missing Void Cast","line number 24: void test_identical_branches(int flag) {
+=> Identical Branches, Branch 'else if' has identical processing statements to a previous branch.
+line number 23: void test_identical_branches(int flag) {
+=> Missing Void Cast, Function 'returns_int' returns a value, but it is called as a standalone statement without a (void) cast.
+line number 26: void test_identical_branches(int flag) {
+=> Missing Void Cast, Function 'returns_int' returns a value, but it is called as a standalone statement without a (void) cast."
+new_tests.c - test_redundant_cast,1,Redundant Void Cast,"line number 33: void test_redundant_cast() {
+=> Redundant Void Cast, Function 'returns_void' already returns void, so the (void) cast is redundant."
+new_tests.c - test_missing_cast,1,Missing Void Cast,"line number 37: void test_missing_cast() {
+=> Missing Void Cast, Function 'returns_int' returns a value, but it is called as a standalone statement without a (void) cast."

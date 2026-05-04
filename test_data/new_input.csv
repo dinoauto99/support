@@ -1,0 +1,5 @@
+File,Function
+new_tests.c,test_unused_local
+new_tests.c,test_identical_branches
+new_tests.c,test_redundant_cast
+new_tests.c,test_missing_cast

@@ -112,3 +112,21 @@ def extract_params(param_str: str) -> List[str]:
             if param_name not in ["const", "volatile", "restrict"]:
                 params.append(param_name)
     return params
+
+def get_file_function_types(masked_code: str):
+    void_funcs = set()
+    non_void_funcs = set()
+    
+    # Heuristic to find function definitions
+    pattern = r'\b([a-zA-Z_]\w*(?:\s+[a-zA-Z_]\w*)*(?:\s*\*)*)\s+([a-zA-Z_]\w*)\s*\([^)]*\)\s*\{'
+    matches = re.finditer(pattern, masked_code)
+    for match in matches:
+        ret_type = match.group(1).strip()
+        func_name = match.group(2).strip()
+        
+        if 'void' in ret_type.split() and '*' not in ret_type:
+            void_funcs.add(func_name)
+        else:
+            non_void_funcs.add(func_name)
+            
+    return void_funcs, non_void_funcs
